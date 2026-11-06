@@ -1,0 +1,3 @@
+lab/documents/notes.txt:These are my project notes.
+lab/documents/report.txt:This is my project report.
+lab/documents/summary.txt:This is my project summary.
