@@ -1,10 +1,11 @@
-USE es8
-
--- Drop child tables before parent tables so foreign keys do not block the drops.
+-- Active: 1792773709524@@127.0.0.1@3306@es8
 DROP TABLE IF EXISTS order_lines;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS products;
 DROP TABLE IF EXISTS customers;
+
+USE es8
+-- Drop child tables before parent tables so foreign keys do not block the drops.
 
 -- Customers: one row per customer.
 CREATE TABLE customers (
@@ -93,4 +94,34 @@ INNER JOIN customers AS c
 ORDER BY o.order_date, o.order_no;
 
 -- Question 2
-SELECT p.item_name, p.item_price, ol.quantity,
+SELECT p.item_name, p.item_price, ol.quantity, 
+p.item_price * ol.quantity AS line_total
+FROM order_lines AS ol
+INNER JOIN products AS p
+  ON ol.item_code = p.item_code
+WHERE ol.order_no = 1004
+ORDER BY p.item_name;
+
+-- Question 3
+SELECT DISTINCT c.customer_name
+FROM customers AS c
+INNER JOIN orders AS o
+  ON c.customer_email = o.customer_email
+INNER JOIN order_lines AS ol
+  ON o.order_no = ol.order_no
+INNER JOIN products AS p
+  ON ol.item_code = p.item_code
+WHERE p.item_name = 'Croissant'
+ORDER BY c.customer_name;
+
+-- Question 4
+SELECT o.order_no, o.order_date, p.item_name, ol.quantity
+FROM customers AS c
+INNER JOIN orders AS o
+  ON c.customer_email = o.customer_email
+INNER JOIN order_lines AS ol
+  ON o.order_no = ol.order_no
+INNER JOIN products AS p
+  ON ol.item_code = p.item_code
+WHERE c.customer_name = 'Ben Okafor'
+ORDER BY o.order_date, o.order_no, p.item_name;

@@ -71,3 +71,6 @@ Together, Orders and Products have a many-to-many relationship, resolved by the 
 Project note
 
 For this project, I started with the bakery's original table and separated the repeating item information, product details, and customer details into tables with clear primary and foreign keys. I used INSERT INTO ... SELECT to move the existing data instead of entering it again, then used INNER JOIN queries to answer the four questions using only the normalized tables.
+
+Project Stage 1: 3NF Check
+My Project Stage 1 database is for tracking common statistics in Slay the Spire 2. I checked each table in the design for the same 3NF requirements used above. The tables do not have repeating groups, partial dependencies, or transitive dependencies: each table represents one subject, and its non-key columns describe that subject and depend on its key. The relationships are handled through primary and foreign keys rather than by repeating details in multiple places. I did not find any normalization issues, so the Stage 1 design already satisfies third normal form. Because no changes were needed, I do not need to update the project README or ERD or make a corrective commit.
